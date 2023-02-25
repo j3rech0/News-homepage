@@ -1,0 +1,41 @@
+@import "_mixin";
+
+.toggle {
+  cursor: pointer;
+  position: fixed;
+  right: 20px;
+  display: flex;
+  background-color: hsla(var(--color-white), .8);
+  padding: 10px;
+  z-index: 1;
+  > .-close {
+    display: none;
+  }
+  .active & {
+    > .-close {
+      display: block;
+    }
+    > .-open {
+      display: none;
+    }
+  }
+  @include bp(768){
+    display: none;
+  }
+}
+
+.read-button {
+  color: hsl(var(--color-white));
+  background-color: hsl(var(--color-red));
+  padding: rem(15) rem(31);
+  display: inline-block;
+  height: rem(47);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: rem(14);
+  letter-spacing: rem(4);
+  transition: var(--transition);
+  &:hover{
+    background-color: hsl(var(--color-darker-blue));
+  }
+}

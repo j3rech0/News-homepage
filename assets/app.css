@@ -1,0 +1,407 @@
+@charset "UTF-8";
+/***
+    The new CSS reset - version 1.8.4 (last updated 14.2.2023)
+    GitHub page: https://github.com/elad2412/the-new-css-reset
+***/
+/*
+    Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
+    - The "symbol *" part is to solve Firefox SVG sprite bug
+ */
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+  all: unset;
+  display: revert;
+}
+
+/* Preferred box-sizing value */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Reapply the pointer cursor for anchor tags */
+a,
+button {
+  cursor: revert;
+}
+
+/* Remove list styles (bullets/numbers) */
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+/* For images to not be able to exceed their container */
+img {
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+/* removes spacing between cells in tables */
+table {
+  border-collapse: collapse;
+}
+
+/* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
+input,
+textarea {
+  -webkit-user-select: auto;
+}
+
+/* revert the 'white-space' property for textarea elements on Safari */
+textarea {
+  white-space: revert;
+}
+
+/* minimum style to allow to style meter element */
+meter {
+  -webkit-appearance: revert;
+  appearance: revert;
+}
+
+/* preformatted text - use only for this feature */
+:where(pre) {
+  all: revert;
+}
+
+/* reset default text opacity of input placeholder */
+::placeholder {
+  color: unset;
+}
+
+/* remove default dot (•) sign */
+::marker {
+  content: initial;
+}
+
+/* fix the feature of 'hidden' attribute.
+   display:revert; revert to element instead of attribute */
+:where([hidden]) {
+  display: none;
+}
+
+/* revert for bug in Chromium browsers
+   - fix for the content editable attribute will work properly.
+   - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
+:where([contenteditable]:not([contenteditable=false])) {
+  -moz-user-modify: read-write;
+  -webkit-user-modify: read-write;
+  overflow-wrap: break-word;
+  -webkit-line-break: after-white-space;
+  -webkit-user-select: auto;
+}
+
+/* apply back the draggable feature - exist only in Chromium and Safari */
+:where([draggable=true]) {
+  -webkit-user-drag: element;
+}
+
+/* Revert Modal native behavior */
+:where(dialog:modal) {
+  all: revert;
+}
+
+.toggle {
+  cursor: pointer;
+  position: fixed;
+  right: 20px;
+  display: flex;
+  background-color: hsla(var(--color-white), 0.8);
+  padding: 10px;
+  z-index: 1;
+}
+.toggle > .-close {
+  display: none;
+}
+.active .toggle > .-close {
+  display: block;
+}
+.active .toggle > .-open {
+  display: none;
+}
+@media (min-width: 48em) {
+  .toggle {
+    display: none;
+  }
+}
+
+.read-button {
+  color: hsl(var(--color-white));
+  background-color: hsl(var(--color-red));
+  padding: 0.9375rem 1.9375rem;
+  display: inline-block;
+  height: 2.9375rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.25rem;
+  transition: var(--transition);
+}
+.read-button:hover {
+  background-color: hsl(var(--color-darker-blue));
+}
+
+:root {
+  --font-family: "Inter", sans-serif;
+  --color-orange: 35, 77%, 62%;
+  --color-red: 5, 85%, 63%;
+  --color-white: 36, 100%, 99%;
+  --color-blue: 233, 8%, 79%;
+  --color-dark-blue: 236, 13%, 42%;
+  --color-darker-blue: 240, 100%, 5%;
+  --transition: 0.3s;
+}
+
+html {
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  background-color: hsl(var(--color-white));
+}
+
+p {
+  color: hsl(var(--color-dark-blue));
+  line-height: 1.6;
+}
+
+.overlay {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  width: 100vh;
+  height: 100vh;
+}
+@media (min-width: 48em) {
+  .overlay {
+    display: none;
+  }
+}
+.overlay::before {
+  content: "";
+  width: 100vh;
+  height: 100vh;
+  position: absolute;
+  background-color: transparent;
+  top: 0;
+  transition-delay: 0.5s;
+  transition: all var(--transition);
+  pointer-events: none;
+}
+.overlay.active {
+  z-index: 0;
+}
+.overlay.active::before {
+  background-color: hsla(0deg, 0%, 0%, 0.5);
+}
+
+.main-grid {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 1.75rem auto;
+  max-width: calc(69.375rem + 2rem);
+  z-index: 2;
+  display: grid;
+  grid-template-areas: "header" "main" "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+.main-grid > * {
+  grid-column: 1/-1;
+}
+@media (min-width: 64em) {
+  .main-grid {
+    margin: 5rem auto;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5625rem;
+}
+@media (min-width: 64em) {
+  .header {
+    margin-bottom: 2.5rem;
+  }
+}
+.header.active > .nav {
+  transform: translate(0, 0);
+}
+.header > .nav {
+  background: white;
+  height: 100vh;
+  transform: translate(17rem, 0);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 16rem;
+  padding: 1.25rem;
+  transition: all 0.3s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 48em) {
+  .header > .nav {
+    padding-right: 0;
+    position: relative;
+    height: auto;
+    transform: translate(0, 0);
+    width: auto;
+  }
+}
+.header > .nav > ul {
+  margin-top: 7.75rem;
+}
+@media (min-width: 48em) {
+  .header > .nav > ul {
+    margin-top: 0;
+    display: flex;
+  }
+}
+.header .nav-item > a {
+  font-size: 1.125rem;
+  transition: var(--transition);
+  color: hsl(var(--color-darker-blue));
+}
+@media (min-width: 48em) {
+  .header .nav-item > a {
+    font-size: 0.9375rem;
+    color: hsl(var(--color-dark-blue));
+  }
+}
+.header .nav-item > a:hover {
+  color: hsl(var(--color-orange));
+}
+.header .nav-item + .nav-item {
+  margin-top: 1.5625rem;
+}
+@media (min-width: 48em) {
+  .header .nav-item + .nav-item {
+    margin-top: 0;
+    margin-left: 2.5rem;
+  }
+}
+.header > .logo > img {
+  max-width: 100%;
+  width: 2.8125rem;
+}
+@media (min-width: 48em) {
+  .header > .logo > img {
+    width: 4.0625rem;
+  }
+}
+
+@media (min-width: 64em) {
+  .content {
+    display: grid;
+    grid-template-columns: fit-content(750px) fit-content(350px);
+    gap: 1.875rem;
+  }
+}
+
+.hero-text {
+  margin-top: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(19.8125rem - 1.875rem), 1fr));
+  gap: 1.25rem;
+}
+@media (min-width: 64em) {
+  .hero-text {
+    margin-top: 2.5rem;
+  }
+}
+.hero-text > .title {
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 2.625rem;
+}
+@media (min-width: 48em) {
+  .hero-text > .title {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+  }
+}
+.hero-text > .description > p {
+  margin-bottom: 1.875rem;
+}
+
+.sidebar {
+  background-color: hsl(var(--color-darker-blue));
+  margin-top: 3.75rem;
+  padding: 1rem 1rem 1.875rem;
+}
+@media (min-width: 64em) {
+  .sidebar {
+    margin-top: 0;
+    padding: 1.5625rem 1.5625rem 1.25rem;
+  }
+}
+.sidebar p,
+.sidebar > * {
+  color: hsl(var(--color-blue));
+}
+.sidebar > .title {
+  color: hsl(var(--color-orange));
+  font-weight: 700;
+  font-size: 1.875rem;
+  margin-bottom: 1.875rem;
+}
+@media (min-width: 64em) {
+  .sidebar > .title {
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+  }
+}
+.sidebar > .article + .article {
+  margin-top: 1.875rem;
+  padding-top: 1.875rem;
+  border-top: 1px solid hsla(var(--color-blue), 0.5);
+}
+.sidebar > .article > h3 {
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-bottom: 0.625rem;
+}
+.sidebar > .article .link {
+  transition: var(--transition);
+  color: hsl(var(--color-white));
+}
+.sidebar > .article .link:hover {
+  color: hsl(var(--color-orange));
+}
+
+.card {
+  margin-top: 3.75rem;
+  display: grid;
+  gap: 1.875rem;
+  grid-template-columns: repeat(auto-fit, minmax(calc(20.4375rem - 1.875rem), 1fr));
+}
+.card-text > h4 {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: hsl(var(--color-blue));
+}
+.card-text > h5 {
+  font-weight: 800;
+  font-size: 1.125rem;
+  margin: 0.625rem 0;
+}
+.card > .item:hover {
+  color: hsl(var(--color-red));
+}
+.card > .item > img {
+  object-fit: cover;
+}
+.card > .item {
+  display: grid;
+  grid-template-columns: 6.25rem 1fr;
+  gap: 1.25rem;
+  transition: var(--transition);
+  align-items: stretch;
+}/*# sourceMappingURL=app.css.map */
