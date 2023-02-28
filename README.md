@@ -29,7 +29,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Solution URL: [https://www.frontendmentor.io/solutions/news-homepage-VubwIEIWqv](https://www.frontendmentor.io/solutions/news-homepage-VubwIEIWqv)
 - Live Site URL: [https://news-homepage-alpha-two.vercel.app/](https://news-homepage-alpha-two.vercel.app/)
 
 ## My process
